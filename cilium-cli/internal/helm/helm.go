@@ -147,7 +147,6 @@ func MergeVals(
 	}
 
 	helmOptsStr := strings.Join(helmOpts, ",")
-
 	helmValues := map[string]interface{}{}
 	err := strvals.ParseInto(helmOptsStr, helmValues)
 	if err != nil {
@@ -260,6 +259,8 @@ type UpgradeParameters struct {
 	ResetValues bool
 	// --reuse-values flag from Helm upgrade. See https://helm.sh/docs/helm/helm_upgrade/ for details.
 	ReuseValues bool
+	// --reset-then-reuse-values flag from Helm upgrade. See https://helm.sh/docs/helm/helm_upgrade/ for details.
+	ReuseThenReuseValues bool
 	// Wait determines if Helm actions will wait for completion
 	Wait bool
 	// WaitDuration is the timeout for helm operations
@@ -294,6 +295,7 @@ func Upgrade(
 	helmClient.Namespace = params.Namespace
 	helmClient.ResetValues = params.ResetValues
 	helmClient.ReuseValues = params.ReuseValues
+	helmClient.ResetThenReuseValues = params.ReuseThenReuseValues
 	helmClient.Wait = params.Wait
 	helmClient.Timeout = params.WaitDuration
 	helmClient.DryRun = params.IsDryRun()
